@@ -1,6 +1,6 @@
 # Entry point: import utils, train model, evaluate
-from src.utils import load_data
-from src.train import train, evaluate
+from src.data import load_data
+from src.train_model import train, evaluate
 
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = load_data("data/dataset.csv")
