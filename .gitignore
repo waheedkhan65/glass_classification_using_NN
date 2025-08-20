@@ -2,6 +2,23 @@
 #Template for AL projects for Dynamics 365 Business Central
 #launch.json folder
 .vscode/
+# Ignore virtual environments
+.venv/
+.myenv/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
 #Cache folder
 .alcache/
 #Symbols folder
@@ -11,6 +28,7 @@
 #Testing Output folder
 .output/
 #Extension App-file
+
 *.app
 #Rapid Application Development File
 rad.json
