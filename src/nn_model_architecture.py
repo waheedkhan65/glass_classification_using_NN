@@ -9,7 +9,15 @@ class Model(nn.Module):
     self.out = nn.Linear(h2, out_features)
     self.dropout = nn.Dropout(0.3)
 
+    # Or we can also do in a easy way like this, but then we have to change the forward method
+    '''self.network = nn.sequential(
+      nn.Linear(in_features, h1),
+      nn.Linear(h1, h2),
+      nn.Linear(h2, out_features),
+    ) '''
+
   def forward(self, x):
+    # x = self.network(x)    # you will do this if you use nn.sequential otherwise do below
     x = F.relu(self.fc1(x))
     x = F.relu(self.fc2(x))
     x = self.out(x)
