@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import torch
+import joblib
 
 def load_data():
     df = pd.read_csv("data\processed\glass_dataset.csv")
@@ -15,6 +16,12 @@ def load_data():
     X = scaler.fit_transform(X)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+    # ✅ Save StandardScaler
+    joblib.dump(scaler, "models/scaler.pkl")
+    print("✅ Scaler saved to models/scaler.pkl")
+    
 
     return (
         torch.tensor(X_train, dtype=torch.float32),

@@ -8,7 +8,7 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = load_data()
 
     # Train model
-    model, losses = train(X_train, y_train, epochs=100, lr=0.001)
+    model, losses = train(X_train, y_train, epochs=200, lr=0.001)
 
     # Evaluate model
     evaluate(model, X_test, y_test)
@@ -17,3 +17,6 @@ if __name__ == "__main__":
     os.makedirs("models", exist_ok=True)       # Create the models folder if it doesn't exist
     torch.save(model.state_dict(),"models/my_nn_model.pt" )
     print("Model saved to models/my_nn_model.pt")
+
+
+  

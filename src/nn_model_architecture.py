@@ -2,14 +2,19 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class Model(nn.Module):
-  def __init__(self, in_features=9, h1=64, h2=128, h3=14, out_features=7):
+  def __init__(self, in_features=9, h1=64, h2=128, h3=256, h4=128, h5=64, h6=14,  out_features=7):
     super().__init__()
     self.fc1 = nn.Linear(in_features, h1)
     self.fc2 = nn.Linear(h1, h2)
-    self.out = nn.Linear(h2, out_features)
-    self.dropout = nn.Dropout(0.3)
+    self.fc3 = nn.Linear(h2, h3)
+    self.fc4 = nn.Linear(h3, h4)
+    self.fc5 = nn.Linear(h4, h5)
+    self.fc6 = nn.Linear(h5, h6)
+    self.out = nn.Linear(h6, out_features)
+    self.dropout = nn.Dropout(0.2) # Dropout layer to prevent overfitting
 
-    # Or we can also do in a easy way like this, but then we have to change the forward method
+    # You can also use nn.Sequential to define the network in a more compact way
+    # but then you will have to change the forward method accordingly
     '''self.network = nn.sequential(
       nn.Linear(in_features, h1),
       nn.Linear(h1, h2),
@@ -20,6 +25,10 @@ class Model(nn.Module):
     # x = self.network(x)    # you will do this if you use nn.sequential otherwise do below
     x = F.relu(self.fc1(x))
     x = F.relu(self.fc2(x))
+    x = F.relu(self.fc3(x))
+    x = F.relu(self.fc4(x))
+    x = F.relu(self.fc5(x))
+    x = F.relu(self.fc6(x))
     x = self.out(x)
 
     return x
