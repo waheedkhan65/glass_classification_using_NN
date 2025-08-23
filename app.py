@@ -7,9 +7,8 @@ import numpy as np
 import joblib
 import os
 
-# ---------------------
+
 # Load Trained Model & Scaler
-# ---------------------
 MODEL_PATH = "models/my_nn_model.pt"
 SCALER_PATH = "models/scaler.pkl"
 
@@ -21,9 +20,8 @@ model = Model()
 model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device('cpu')))
 model.eval()
 
-# ---------------------
+
 # Streamlit UI
-# ---------------------
 st.set_page_config(page_title="Glass Classification", page_icon="🔍", layout="centered")
 st.title("🔍 Glass Type Classification using Neural Network")
 
@@ -32,11 +30,10 @@ This app predicts the **type of glass** based on its chemical composition using 
 Provide the feature values below:
 """)
 
-# ---------------------
+
 # Feature Inputs
-# ---------------------
 feature_names = [
-    "RI", "Na", "Mg", "Al", "Si", "K", "Ca", "Ba", "Fe"
+    "RI: refractive index", "Na: Sodium", "Mg: Magnesium", "Al: Aluminum", "Si: Silicon", "K: Potassium", "Ca: Calcium", "Ba:  Barium", "Fe:  Iron"
 ]
 
 input_data = []
@@ -45,9 +42,8 @@ for i, feature in enumerate(feature_names):
     value = cols[i % 3].number_input(f"{feature}", min_value=0.0, max_value=20.0, value=1.0, step=0.01)
     input_data.append(value)
 
-# ---------------------
+
 # Predict Button
-# ---------------------
 if st.button("🔍 Predict Glass Type"):
     # Convert input to numpy and apply scaler
     X_input = np.array(input_data).reshape(1, -1)
@@ -78,7 +74,7 @@ if st.button("🔍 Predict Glass Type"):
     st.bar_chart(probs.numpy()[0])
 
 st.write("---")
-st.write("**📌 Model:** Neural Network (2 Hidden Layers, PyTorch)  |  **Dataset:** UCI Glass Dataset")
+st.write("**📌 Model:** Neural Network (5 Hidden Layers, PyTorch)  |  **Dataset:** UCI Glass Dataset")
 st.write("**🔗 Source Code:** [https://github.com/waheedkhan65/glass_classification_using_NN]")
 
 
