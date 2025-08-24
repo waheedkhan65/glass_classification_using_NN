@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class Model(nn.Module):
-  def __init__(self, in_features=9, h1=64, h2=128, h3=128, h4=64, h5=14,  out_features=7):
+  def __init__(self, in_features=9, h1=64, h2=128, h3=64, h4=14,  out_features=7):
     super().__init__()
     self.fc1 = nn.Linear(in_features, h1)
     self.bn1 = nn.BatchNorm1d(h1)
@@ -16,10 +16,7 @@ class Model(nn.Module):
     self.fc4 = nn.Linear(h3, h4)
     self.bn4 = nn.BatchNorm1d(h4)
 
-    self.fc5 = nn.Linear(h4, h5)
-    self.bn5 = nn.BatchNorm1d(h5)
-
-    self.out = nn.Linear(h5, out_features)
+    self.out = nn.Linear(h4, out_features)
 
     # Dropout layer to prevent overfitting
     self.dropout = nn.Dropout(0.2) 
@@ -30,7 +27,6 @@ class Model(nn.Module):
       x = self.dropout(F.relu(self.bn2(self.fc2(x))))
       x = self.dropout(F.relu(self.bn3(self.fc3(x))))
       x = self.dropout(F.relu(self.bn4(self.fc4(x))))
-      x = self.dropout(F.relu(self.bn5(self.fc5(x))))
       x = self.out(x)  
 
       return x
@@ -60,11 +56,6 @@ class Model(nn.Module):
 
             nn.Linear(128, 64),
             nn.BatchNorm1d(64),
-            nn.ReLU(),
-            nn.Dropout(0.3),
-
-            nn.Linear(64, 14),
-            nn.BatchNorm1d(14),
             nn.ReLU(),
             nn.Dropout(0.3),
 

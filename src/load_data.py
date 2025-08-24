@@ -2,8 +2,23 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from torch.utils.data import Dataset
 import torch
 import joblib
+
+# Custom Dataset class
+class CustomDataset(Dataset):
+    def __init__(self, features, labels):
+        self.features = features
+        self.labels = labels
+
+    def __len__(self):
+        return len(self.features)
+
+    def __getitem__(self, idx):
+        return self.features[idx], self.labels[idx]
+    
+
 
 def load_data():
     df = pd.read_csv("data\processed\glass_dataset.csv")
@@ -11,7 +26,7 @@ def load_data():
     X = df.drop("Type", axis=1).values
     y = df["Type"].values
 
-    # Convert the features to standardscale, this is important for neural networks to treat the features equally
+    # Standardize features
     scaler = StandardScaler()
     X = scaler.fit_transform(X)
 
@@ -29,3 +44,5 @@ def load_data():
         torch.tensor(y_train, dtype=torch.long),
         torch.tensor(y_test, dtype=torch.long),
     )
+
+
